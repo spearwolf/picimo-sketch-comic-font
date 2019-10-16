@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="theme-color" content="#ff0066">
   <title>picimo sketch: comic-font</title>
   <style>
+    html, body, #picimo {
+      width: 100%;
+      height: 100%;
+    }
     body {
       margin: 0;
       overflow: hidden;
+      position: fixed;
+      overscroll-behavior-y: none;
       background-color: #00f;
     }
     #picimo {
+      position: absolute;
       background: radial-gradient(#cc9, #369);
     }
   </style>
 </head>
 <body>
   <div id="picimo"></div>
-  <script src="./index.ts"></script>
+  <script src="./index-three-fiber.tsx"></script>
 </body>
 </html>

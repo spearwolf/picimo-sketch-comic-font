@@ -15,7 +15,12 @@
     "watcherGlob": "**"
   },
   "dependencies": {
+    "@types/react": "^16.9.6",
+    "@types/react-dom": "^16.9.2",
     "picimo": "^0.0.17",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-three-fiber": "^3.0.2",
     "three": "^0.109.0"
   },
   "devDependencies": {
