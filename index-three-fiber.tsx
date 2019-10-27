@@ -4,6 +4,7 @@ import {Canvas, useFrame} from 'react-three-fiber';
 import {Mesh} from 'three';
 import {BitmapText2D} from './src/components/BitmapText2D';
 import {TextureAtlas} from './src/components/TextureAtlas';
+import {BitmapText2DBlock} from './src/components/BitmapText2DBlock';
 
 const Thing = () => {
   const ref = useRef<Mesh>();
@@ -31,6 +32,7 @@ ReactDOM.render(
 
     <BitmapText2D>
       <TextureAtlas attach="fontAtlas" src="comic-schrift.json" />
+      <BitmapText2DBlock text="MOIN MOIN" />
     </BitmapText2D>
 
   </Canvas>,
