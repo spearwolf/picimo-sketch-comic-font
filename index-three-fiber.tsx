@@ -2,6 +2,8 @@ import React, {useRef} from 'react';
 import ReactDOM from 'react-dom';
 import {Canvas, useFrame} from 'react-three-fiber';
 import {Mesh} from 'three';
+import {BitmapText2D} from './src/components/BitmapText2D';
+import {TextureAtlas} from './src/components/TextureAtlas';
 
 const Thing = () => {
   const ref = useRef<Mesh>();
@@ -24,7 +26,13 @@ const Thing = () => {
 
 ReactDOM.render(
   <Canvas>
+
     <Thing />
+
+    <BitmapText2D>
+      <TextureAtlas attach="fontAtlas" src="comic-schrift.json" />
+    </BitmapText2D>
+
   </Canvas>,
   document.getElementById('picimo')
 )

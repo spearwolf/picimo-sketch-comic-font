@@ -17,10 +17,8 @@ const display = new Display(
 
 display.on('init', async ({stage: {scene}}: DisplayOnInitOptions) => {
 
-  const fontAtlas = await TextureAtlas.load('comic-schrift.json', './');
-  const text = new BitmapText2D(fontAtlas, {
-    capacity: 1000,
-  });
+  const text = new BitmapText2D({ capacity: 1000 });
+  text.fontAtlas = await TextureAtlas.load('comic-schrift.json', './');
 
   text.drawText('WELCOME\nTO\nPICIMO!', 0, 0, 0, 0, 'center', 'center');
 
@@ -32,7 +30,7 @@ display.on('init', async ({stage: {scene}}: DisplayOnInitOptions) => {
   // };
 
   console.log('display', display);
-  console.log('fontAtlas', fontAtlas);
+  console.log('fontAtlas', text.fontAtlas);
   console.log('text', text);
 });
 
