@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {extend, useUpdate} from 'react-three-fiber';
 import {BitmapText2DBlock as PicimoBitmapText2DBlock} from 'picimo';
 import {oneOf, arrayOf, number, string} from 'prop-types';
@@ -16,9 +16,15 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
     // TODO update position, maxWidth, *align, ..
   }, [bitmapText2D, text]);
 
-  if (bitmapText2D == null) return null;
+  useEffect(() => () => {
+    const curBitmapText2D = ref.current;
+    console.log('Bye, bye:', curBitmapText2D);
+    if (curBitmapText2D) {
+      curBitmapText2D.clear();
+    }
+  }, [])
 
-  // TODO clean / destroy / remove from BitmapText2D
+  if (bitmapText2D == null) return null;
 
   return (
     <picimoBitmapText2DBlock
