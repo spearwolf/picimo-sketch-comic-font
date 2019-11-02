@@ -7,7 +7,7 @@ extend({PicimoBitmapText2D});
 
 export const BitmapText2DContext = React.createContext();
 
-export const BitmapText2D = ({children, capacity}) => {
+export const BitmapText2D = ({children, capacity, ...props}) => {
 
   const [bitmapText2D, setBitmapText2D] = useState(null);
 
@@ -21,7 +21,7 @@ export const BitmapText2D = ({children, capacity}) => {
   // TODO move suspense upwards?
   return (
     <Suspense fallback={null}>
-      <picimoBitmapText2D args={[{capacity}]} ref={ref}>
+      <picimoBitmapText2D args={[{capacity}]} ref={ref} {...props}>
         <BitmapText2DContext.Provider value={bitmapText2D}>
           {children}
         </BitmapText2DContext.Provider>
