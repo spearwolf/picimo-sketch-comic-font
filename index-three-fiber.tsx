@@ -28,7 +28,13 @@ const Thing = () => {
 
 ReactDOM.render(
   <Canvas>
-    <Stage2D>
+    <Stage2D plane="xy" type="parallax" projection={{
+      width: 1500,
+      height: 1500,
+      fit: 'contain',
+      distance: 1000,
+      far: 10000,
+    }}>
 
       <Thing />
 
