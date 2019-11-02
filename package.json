@@ -17,13 +17,13 @@
   "dependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
-    "picimo": "^0.0.17",
+    "picimo": "^0.0.18",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-promise-suspense": "^0.3.1",
     "react-three-fiber": "^3.0.7",
-    "three": "^0.109.0"
+    "three": "^0.110.0"
   },
   "devDependencies": {
     "parcel-plugin-static-files-copy": "^2.2.1",
