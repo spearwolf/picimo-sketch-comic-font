@@ -1,49 +1,64 @@
-import React, {useRef} from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
-import {Canvas, useFrame} from 'react-three-fiber';
-import {Mesh} from 'three';
+import {Canvas} from 'react-three-fiber';
 import {BitmapText2D} from './src/components/BitmapText2D';
 import {TextureAtlas} from './src/components/TextureAtlas';
 import {BitmapText2DBlock} from './src/components/BitmapText2DBlock';
 import {Stage2D} from './src/components/Stage2D';
+import {Thing} from './src/Thing';
 
-const Thing = () => {
-  const ref = useRef<Mesh>();
+const PROJECTION = {
+  width: 1500,
+  height: 1500,
+  fit: 'contain',
+  distance: 1000,
+  far: 10000,
+};
 
-  useFrame(() => {
-    ref.current.rotation.z += 0.01;
-  });
+const App = () => {
+
+  const [showTextBlock, setShowTextBlock] =  useState(false);
+  const [enableTextureAtlas, setEnableTextureAtlas] =  useState(true);
+  const [showText, setShowText] =  useState(true);
 
   return (
-    <mesh
-      ref={ref}
-      onClick={e => console.log('click')}
-      onPointerOver={e => console.log('hover')}
-      onPointerOut={e => console.log('unhover')}>
-      <planeBufferGeometry attach="geometry" args={[500, 500]} />
-      <meshBasicMaterial attach="material" color="red" transparent />
-    </mesh>
+    <>
+      <Canvas>
+        <Stage2D plane="xy" type="parallax" projection={PROJECTION}>
+
+          <Thing position={[0, 0, -100]} />
+
+          { showText && (
+            <BitmapText2D>
+              { enableTextureAtlas && <TextureAtlas attach="fontAtlas" src="comic-schrift.json" /> }
+              <BitmapText2DBlock text="WELCOME!" position={[0, 300, 0]} />
+              { showTextBlock && <BitmapText2DBlock text="MOIN MOIN" /> }
+            </BitmapText2D>
+          )}
+
+        </Stage2D>
+      </Canvas>
+
+      <div style={{
+        position: 'absolute',
+        top: '10px',
+        left: '10px',
+      }}>
+        <button
+          onClick={() => setShowTextBlock(!showTextBlock)}
+          className="ui"
+        >{ showTextBlock ? 'hide' : 'show'} text block</button>
+        <button
+          onClick={() => setEnableTextureAtlas(!enableTextureAtlas)}
+          className="ui"
+        >{ enableTextureAtlas ? 'destroy' : 'create'} texture atlas</button>
+        <button
+          onClick={() => setShowText(!showText)}
+          className="ui"
+        >{ showText ? 'hide' : 'show'} all</button>
+      </div>
+    </>
   );
-}
+};
 
-ReactDOM.render(
-  <Canvas>
-    <Stage2D plane="xy" type="parallax" projection={{
-      width: 1500,
-      height: 1500,
-      fit: 'contain',
-      distance: 1000,
-      far: 10000,
-    }}>
-
-      <Thing />
-
-      <BitmapText2D>
-        <TextureAtlas attach="fontAtlas" src="comic-schrift.json" />
-        <BitmapText2DBlock text="MOIN MOIN" />
-      </BitmapText2D>
-
-    </Stage2D>
-  </Canvas>,
-  document.getElementById('picimo')
-)
+ReactDOM.render(<App/>, document.getElementById('picimo'));

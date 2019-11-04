@@ -6,7 +6,7 @@ import {BitmapText2DContext} from './BitmapText2D';
 
 extend({PicimoBitmapText2DBlock});
 
-const log = new Logger('BitmapText2DBlock');
+const log = new Logger('BitmapText2DBlock', 0, Infinity);
 
 export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) => {
 
@@ -26,16 +26,14 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
     }
   }, [])
 
-  if (bitmapText2D == null) return null;
+  if (!bitmapText2D) return null;
 
   return (
     <picimoBitmapText2DBlock
       ref={ref}
       args={[
         bitmapText2D,
-        position[0],
-        position[1],
-        position[2],
+        position,
         maxWidth,
         hAlign,
         vAlign,

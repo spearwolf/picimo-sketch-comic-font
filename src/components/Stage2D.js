@@ -5,7 +5,7 @@ import {node, oneOf, object} from 'prop-types';
 
 extend({PicimoStage2D});
 
-const log = new Logger('Stage2D');
+const log = new Logger('Stage2D', 0, Infinity);
 
 export const Stage2D = ({children, type, plane, projection: projectionOptions}) => {
 
@@ -20,7 +20,7 @@ export const Stage2D = ({children, type, plane, projection: projectionOptions}) 
     );
     log.log('create projection:', proj);
     return proj;
-  }, [plane, projectionOptions]);
+  }, [plane, type, projectionOptions]);
 
   useEffect(() => {
     const stage = ref.current;
