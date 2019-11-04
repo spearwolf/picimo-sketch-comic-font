@@ -20,13 +20,14 @@ const App = () => {
   const [showTextBlock, setShowTextBlock] =  useState(false);
   const [enableTextureAtlas, setEnableTextureAtlas] =  useState(true);
   const [showText, setShowText] =  useState(true);
+  const [showThing, setShowThing] =  useState(true);
 
   return (
     <>
       <Canvas>
         <Stage2D plane="xy" type="parallax" projection={PROJECTION}>
 
-          <Thing position={[0, 0, -100]} />
+          { showThing && <Thing position={[0, 0, -100]} /> }
 
           { showText && (
             <BitmapText2D>
@@ -56,6 +57,10 @@ const App = () => {
           onClick={() => setShowText(!showText)}
           className="ui"
         >{ showText ? 'hide' : 'show'} all</button>
+        <button
+          onClick={() => setShowThing(!showThing)}
+          className="ui"
+        >{ showThing ? 'hide' : 'show'} thing</button>
       </div>
     </>
   );
