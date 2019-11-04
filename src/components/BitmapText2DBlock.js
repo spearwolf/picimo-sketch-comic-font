@@ -19,10 +19,10 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
   }, [bitmapText2D, text]);
 
   useEffect(() => () => {
-    const curBitmapText2D = ref.current;
-    log.log('Bye, bye:', curBitmapText2D);
-    if (curBitmapText2D) {
-      curBitmapText2D.clear();
+    const textBlock = ref.current;
+    log.log('clear:', textBlock);
+    if (textBlock) {
+      textBlock.clear();
     }
   }, [])
 
