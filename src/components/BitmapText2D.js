@@ -24,7 +24,7 @@ export const BitmapText2D = ({children, capacity, ...props}) => {
     log.log('useUpdate', text2d.fontAtlas);
     if (text2d.fontAtlas) {
       // TODO remove?
-      setBitmapText2D(text2d.fontAtlas);
+      setBitmapText2D(text2d);
     }
     text2d.on('fontAtlasUpdate', onFontAtlasUpdate);
   }, []);
