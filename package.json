@@ -28,6 +28,7 @@
   "devDependencies": {
     "eslint": "^6.6.0",
     "eslint-plugin-react": "^7.16.0",
+    "parcel": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.2.1",
     "typescript": "^3.6.3"
   }
