@@ -21,6 +21,7 @@ const App = () => {
   const [enableTextureAtlas, setEnableTextureAtlas] =  useState(true);
   const [showText, setShowText] =  useState(true);
   const [showThing, setShowThing] =  useState(true);
+  const [text, setText] =  useState('MOIN MOIN');
 
   return (
     <>
@@ -33,7 +34,7 @@ const App = () => {
             <BitmapText2D>
               { enableTextureAtlas && <TextureAtlas attach="fontAtlas" src="comic-schrift.json" /> }
               <BitmapText2DBlock text="WELCOME!" position={[0, 300, 0]} />
-              { showTextBlock && <BitmapText2DBlock text="MOIN MOIN" /> }
+              { showTextBlock && <BitmapText2DBlock text={text} /> }
             </BitmapText2D>
           )}
 
@@ -49,6 +50,10 @@ const App = () => {
           onClick={() => setShowTextBlock(!showTextBlock)}
           className="ui"
         >{ showTextBlock ? 'hide' : 'show'} text block</button>
+        <button
+          onClick={() => setText(text.indexOf('MOIN') === 0 ? 'HEJ HO!' : 'MOIN MOIN')}
+          className="ui"
+        >change text</button>
         <button
           onClick={() => setEnableTextureAtlas(!enableTextureAtlas)}
           className="ui"

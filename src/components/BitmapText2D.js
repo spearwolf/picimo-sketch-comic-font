@@ -1,7 +1,8 @@
-import React, {Suspense, useState, useRef, useEffect} from 'react';
-import {extend, useUpdate, useFrame} from 'react-three-fiber';
+import React, {Suspense, useState} from 'react';
+import {extend} from 'react-three-fiber';
 import {BitmapText2D as PicimoBitmapText2D, Logger} from 'picimo';
 import {node, number} from 'prop-types';
+import {useLifecycledRef} from './useLifecycledRef';
 
 extend({PicimoBitmapText2D});
 
@@ -11,40 +12,34 @@ export const BitmapText2DContext = React.createContext();
 
 export const BitmapText2D = ({children, capacity, ...props}) => {
 
-  const [bitmapText2D, setBitmapText2D] = useState(undefined);
+  const [bitmapText2DContext, setBitmapText2DContext] = useState(undefined);
 
   const onFontAtlasUpdate = bt2d => {
     log.log('onFontAtlasUpdate, fontAtlas=', bt2d.fontAtlas, bt2d);
-    if (bt2d.fontAtlas != null && bt2d !== bitmapText2D) {
-      setBitmapText2D(bt2d);
+    if (bt2d.fontAtlas != null && bt2d !== bitmapText2DContext) {
+      setBitmapText2DContext(bt2d);
     }
   };
 
-  useEffect(() => {
-    log.log('create, ref.current=', ref.current);
-    return () => {
-      const bt2d = ref.current;
-      if (bt2d) {
-        log.log('off:fontAtlasUpdate', bt2d);
-        bt2d.off(onFontAtlasUpdate);
+  const [ref] = useLifecycledRef({
+    onCreate(bitmapText2d) {
+      log.log('create, fontAtlas=', bitmapText2d.fontAtlas, bitmapText2d);
+      if (bitmapText2d.fontAtlas) {
+        setBitmapText2DContext(bitmapText2d);
       }
-    }
-  }, []);
-
-  const ref = useUpdate(bt2d => {
-    log.log('update, fontAtlas=', bt2d.fontAtlas, bt2d);
-    if (bt2d.fontAtlas) {
-      // TODO remove?
-      setBitmapText2D(bt2d);
-    }
-    bt2d.on('fontAtlasUpdate', onFontAtlasUpdate);
-  }, []);
+      bitmapText2d.on('fontAtlasUpdate', onFontAtlasUpdate);
+    },
+    onDestroy(bitmapText2d) {
+      log.log('destroy, off:fontAtlasUpdate', bitmapText2d);
+      bitmapText2d.off(onFontAtlasUpdate);
+    },
+  });
 
   // TODO move suspense upwards? or just forward fallback= prop?
   return (
     <Suspense fallback={null}>
       <picimoBitmapText2D args={[{capacity}]} ref={ref} {...props}>
-        <BitmapText2DContext.Provider value={bitmapText2D}>
+        <BitmapText2DContext.Provider value={bitmapText2DContext}>
           {children}
         </BitmapText2DContext.Provider>
       </picimoBitmapText2D>
