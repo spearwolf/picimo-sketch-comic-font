@@ -15,7 +15,7 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
 
   const [ref] = useLifecycledRef({
     onCreate(textBlock) {
-      log.log('create, text=', text, textBlock);
+      log.log('create', text, position, maxWidth, hAlign, vAlign, textBlock);
       textBlock.update(text);
     },
     onDestroy(textBlock) {
@@ -23,25 +23,21 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
       textBlock.clear();
     },
     onUpdate(textBlock) {
-      if (textBlock.text !== text) {
-        log.log('update, text=', text, textBlock);
-        textBlock.update(text);
-      }
+      log.log('update', text, position, maxWidth, hAlign, vAlign, textBlock);
+      textBlock.update(text);
     }
-  }, [text]);
+  }, [text, position, maxWidth, hAlign, vAlign]);
 
   if (!bitmapText2D) return null;
 
   return (
     <picimoBitmapText2DBlock
       ref={ref}
-      args={[
-        bitmapText2D,
-        position,
-        maxWidth,
-        hAlign,
-        vAlign,
-      ]}
+      args={[bitmapText2D, [0, 0, 0]]}
+      position={position}
+      maxWidth={maxWidth}
+      hAlign={hAlign}
+      vAlign={vAlign}
     ></picimoBitmapText2DBlock>
   );
 }

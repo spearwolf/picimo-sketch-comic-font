@@ -1,9 +1,11 @@
 // inspired by https://medium.com/@teh_builder/ref-objects-inside-useeffect-hooks-eb7c15198780
 import React, {useCallback, useRef, useEffect} from 'react'
 
-export const useLifecycledRef = ({onCreate, onDestroy, onUpdate}, deps = []) => {
+export const useLifecycledRef = ({onCreate, onDestroy, onUpdate}, updateDependents = []) => {
 
   const ref = useRef(null)
+
+  let onCreateCalled = false;
 
   const setRef = useCallback(node => {
 
@@ -13,6 +15,7 @@ export const useLifecycledRef = ({onCreate, onDestroy, onUpdate}, deps = []) => 
 
     if (node && onCreate) {
       onCreate(node);
+      onCreateCalled = true;
     }
 
     ref.current = node;
@@ -20,11 +23,10 @@ export const useLifecycledRef = ({onCreate, onDestroy, onUpdate}, deps = []) => 
   }, []);
 
   useEffect(() => {
-    // TODO skip reduntant create() + update() calls..
-    if (onUpdate && ref.current) {
+    if (onUpdate && !onCreateCalled && ref.current) {
       onUpdate(ref.current);
     }
-  }, deps);
+  }, updateDependents);
 
   return [setRef, ref.current];
 

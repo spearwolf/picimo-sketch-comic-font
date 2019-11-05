@@ -22,18 +22,19 @@ const App = () => {
   const [showText, setShowText] =  useState(true);
   const [showThing, setShowThing] =  useState(true);
   const [text, setText] =  useState('MOIN MOIN');
+  const [position, setPosition] =  useState([0, 400, 0]);
 
   return (
     <>
       <Canvas>
         <Stage2D plane="xy" type="parallax" projection={PROJECTION}>
 
-          { showThing && <Thing position={[0, 0, -100]} /> }
+          { showThing && <Thing /> }
 
           { showText && (
-            <BitmapText2D>
+            <BitmapText2D position={[0, 0, 1]}>
               { enableTextureAtlas && <TextureAtlas attach="fontAtlas" src="comic-schrift.json" /> }
-              <BitmapText2DBlock text="WELCOME!" position={[0, 300, 0]} />
+              <BitmapText2DBlock text="WELCOME!" position={position} />
               { showTextBlock && <BitmapText2DBlock text={text} /> }
             </BitmapText2D>
           )}
@@ -51,7 +52,15 @@ const App = () => {
           className="ui"
         >{ showTextBlock ? 'hide' : 'show'} text block</button>
         <button
-          onClick={() => setText(text.indexOf('MOIN') === 0 ? 'HEJ HO!' : 'MOIN MOIN')}
+          onClick={() => {
+            if (text.indexOf('MOIN') === 0) {
+              setText('HEJ HO!');
+              setPosition([0, 400, 0]);
+            } else {
+              setText('MOIN MOIN');
+              setPosition([0, 300, 0]);
+            }
+          }}
           className="ui"
         >change text</button>
         <button
