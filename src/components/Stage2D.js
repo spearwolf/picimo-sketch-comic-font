@@ -28,12 +28,10 @@ export const Stage2D = ({children, type, plane, projection: projectionOptions}) 
     log.log('init stage->projection', stage);
     projection.update(width, height);
     setDefaultCamera(projection.camera);
-    return () => {
-      log.log('bye, bye', stage);
-    }
   }, [projection]);
 
-  useFrame(() => {
+  useFrame(({size: {width, height}}) => {
+    log.log('width=', width, 'height=', height);
     projection.update(width, height);
   });
 
