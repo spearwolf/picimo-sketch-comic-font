@@ -13,30 +13,34 @@ export const BitmapText2D = ({children, capacity, ...props}) => {
 
   const [bitmapText2D, setBitmapText2D] = useState(undefined);
 
-  const onFontAtlasUpdate = text2d => {
-    log.log('onFontAtlasUpdate', text2d.fontAtlas);
-    if (text2d !== bitmapText2D && text2d.fontAtlas) {
-      setBitmapText2D(text2d);
+  const onFontAtlasUpdate = bt2d => {
+    log.log('onFontAtlasUpdate, fontAtlas=', bt2d.fontAtlas, bt2d);
+    if (bt2d.fontAtlas != null && bt2d !== bitmapText2D) {
+      setBitmapText2D(bt2d);
     }
   };
 
-  const ref = useUpdate(text2d => {
-    log.log('useUpdate', text2d.fontAtlas);
-    if (text2d.fontAtlas) {
+  useEffect(() => {
+    log.log('create, ref.current=', ref.current);
+    return () => {
+      const bt2d = ref.current;
+      if (bt2d) {
+        log.log('off:fontAtlasUpdate', bt2d);
+        bt2d.off(onFontAtlasUpdate);
+      }
+    }
+  }, []);
+
+  const ref = useUpdate(bt2d => {
+    log.log('update, fontAtlas=', bt2d.fontAtlas, bt2d);
+    if (bt2d.fontAtlas) {
       // TODO remove?
-      setBitmapText2D(text2d);
+      setBitmapText2D(bt2d);
     }
-    text2d.on('fontAtlasUpdate', onFontAtlasUpdate);
+    bt2d.on('fontAtlasUpdate', onFontAtlasUpdate);
   }, []);
 
-  useEffect(() => () => {
-    log.log('off:fontAtlasUpdate', ref.current);
-    if (ref.current) {
-      ref.current.off(onFontAtlasUpdate);
-    }
-  }, []);
-
-  // TODO move suspense upwards?
+  // TODO move suspense upwards? or just forward fallback= prop?
   return (
     <Suspense fallback={null}>
       <picimoBitmapText2D args={[{capacity}]} ref={ref} {...props}>
