@@ -50,7 +50,7 @@ const App = () => {
         <button
           onClick={() => setShowTextBlock(!showTextBlock)}
           className="ui"
-        >{ showTextBlock ? 'hide' : 'show'} text block</button>
+        >{ showTextBlock ? 'hide' : 'show'} 2nd text line</button>
         <button
           onClick={() => {
             if (text.indexOf('MOIN') === 0) {
@@ -70,11 +70,13 @@ const App = () => {
         <button
           onClick={() => setShowText(!showText)}
           className="ui"
-        >{ showText ? 'hide' : 'show'} all</button>
+        >{ showText ? 'hide' : 'show'} all texts</button>
         <button
           onClick={() => setShowThing(!showThing)}
           className="ui"
         >{ showThing ? 'hide' : 'show'} thing</button>
+
+        <input className="ui" type="text" value={text} onChange={event => setText(event.target.value)}/>
       </div>
     </>
   );
