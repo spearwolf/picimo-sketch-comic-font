@@ -23,8 +23,10 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
       textBlock.clear();
     },
     onUpdate(textBlock) {
-      log.log('update, text=', text, textBlock);
-      textBlock.update(text);
+      if (textBlock.text !== text) {
+        log.log('update, text=', text, textBlock);
+        textBlock.update(text);
+      }
     }
   }, [text]);
 
