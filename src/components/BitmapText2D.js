@@ -10,7 +10,7 @@ const log = new Logger('BitmapText2D', 0, Infinity);
 
 export const BitmapText2DContext = React.createContext();
 
-export const BitmapText2D = ({children, capacity, ...props}) => {
+export const BitmapText2D = ({children, capacity, fallback, ...props}) => {
 
   const [bitmapText2DContext, setBitmapText2DContext] = useState(undefined);
 
@@ -35,9 +35,8 @@ export const BitmapText2D = ({children, capacity, ...props}) => {
     },
   });
 
-  // TODO move suspense upwards? or just forward fallback= prop?
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={fallback}>
       <picimoBitmapText2D args={[{capacity}]} ref={ref} {...props}>
         <BitmapText2DContext.Provider value={bitmapText2DContext}>
           {children}
@@ -50,8 +49,10 @@ export const BitmapText2D = ({children, capacity, ...props}) => {
 BitmapText2D.propTypes = {
   children: node,
   capacity: number,
+  fallback: node,
 }
 
 BitmapText2D.defaultProps = {
   capacity: 2048,
+  fallback: null,
 }
