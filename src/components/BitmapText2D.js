@@ -50,9 +50,13 @@ BitmapText2D.propTypes = {
   children: node,
   capacity: number,
   fallback: node,
+  fontSize: number,
+  lineGap: number,
 }
 
 BitmapText2D.defaultProps = {
   capacity: 2048,
   fallback: null,
+  fontSize: 0,
+  lineGap: 0,
 }

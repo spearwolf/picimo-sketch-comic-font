@@ -35,7 +35,7 @@ const App = () => {
             <BitmapText2D position={[0, 0, 1]}>
               { enableTextureAtlas && <TextureAtlas attach="fontAtlas" src="comic-schrift.json" /> }
               <BitmapText2DBlock text="WELCOME!" position={position} />
-              { showTextBlock && <BitmapText2DBlock text={text} /> }
+              { showTextBlock && <BitmapText2DBlock text={text} fontSize={100} /> }
             </BitmapText2D>
           )}
 

@@ -9,13 +9,13 @@ extend({PicimoBitmapText2DBlock});
 
 const log = new Logger('BitmapText2DBlock', 0, Infinity);
 
-export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) => {
+export const BitmapText2DBlock = ({text, position, maxWidth, fontSize, lineGap, hAlign, vAlign}) => {
 
   const bitmapText2D = useContext(BitmapText2DContext);
 
   const [ref] = useLifecycledRef({
     onCreate(textBlock) {
-      log.log('create', text, position, maxWidth, hAlign, vAlign, textBlock);
+      log.log('create', text, position, maxWidth, fontSize, lineGap, hAlign, vAlign, textBlock);
       textBlock.update(text);
     },
     onDestroy(textBlock) {
@@ -23,10 +23,10 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
       textBlock.clear();
     },
     onUpdate(textBlock) {
-      log.log('update', text, position, maxWidth, hAlign, vAlign, textBlock);
+      log.log('update', text, position, maxWidth, fontSize, lineGap, hAlign, vAlign, textBlock);
       textBlock.update(text);
     }
-  }, [text, position, maxWidth, hAlign, vAlign]);
+  }, [text, position, maxWidth, fontSize, lineGap, hAlign, vAlign]);
 
   if (!bitmapText2D) return null;
 
@@ -36,6 +36,8 @@ export const BitmapText2DBlock = ({text, position, maxWidth, hAlign, vAlign}) =>
       args={[bitmapText2D, [0, 0, 0]]}
       position={position}
       maxWidth={maxWidth}
+      fontSize={fontSize}
+      lineGap={lineGap}
       hAlign={hAlign}
       vAlign={vAlign}
     ></picimoBitmapText2DBlock>
@@ -48,6 +50,8 @@ BitmapText2DBlock.propTypes = {
   maxWidth: number,
   hAlign: oneOf(['left', 'center', 'right']),
   vAlign: oneOf(['top', 'baseline', 'center', 'bottom']),
+  fontSize: number,
+  lineGap: number,
 }
 
 BitmapText2DBlock.defaultProps = {
@@ -56,4 +60,6 @@ BitmapText2DBlock.defaultProps = {
   vAlign: 'center',
   position: [0, 0, 0],
   maxWidth: 0,
+  fontSize: 0,
+  lineGap: 0,
 }
