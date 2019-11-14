@@ -31,7 +31,14 @@ export const BitmapText2D = ({children, capacity, fallback, ...props}) => {
     },
     onDestroy(bitmapText2d) {
       log.log('destroy, off:fontAtlasUpdate', bitmapText2d);
+
       bitmapText2d.off(onFontAtlasUpdate);
+
+      // TODO bitmapText2d.dispose();
+      if (bitmapText2d.geometry) {
+        bitmapText2d.geometry.dispose();
+      }
+      bitmapText2d.disposeMaterial();
     },
   });
 
